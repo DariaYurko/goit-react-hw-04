@@ -21,11 +21,11 @@ export const sendNotifyEndOfData = () => {
 };
 
 export const sendNotifyNotFound = () => {
-  return toast('Nothing was found for your request.', {
+  return toast('Nothing was found for your request. Try another query', {
     style: {
       borderRadius: '10px',
       background: '#fff',
-      color: 'green',
+      color: '3545454',
     },
   });
 };

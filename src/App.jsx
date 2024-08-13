@@ -19,19 +19,18 @@ import './App.css';
 //
 //  --------------------------------------------------------------------
 function App() {
-  const [query, setQuery] = useState(null);
-  const [error, setError] = useState(null);
   const [imageProps, setImageProps] = useState({
     url: '',
     alt: '',
   });
+  const [query, setQuery] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const [pictures, setPictures] = useState([]);
   const [pictures, setPictures] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPutSearh, setIsPutSearh] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPutLoadMore, setIsPutLoadMore] = useState(false);
   const [isLoadMoreBtnShown, setIsLoadMoreBtnShown] = useState(false);
   // --------------------------------------------------/
@@ -45,14 +44,13 @@ function App() {
   function onCloseModal() {
     setIsModalOpen(false);
   }
-  // ---------- /functions for work with modal --------/
-  //
   // -------------------------------------------------/
+  //
+  //
+  // ------- functions for work with buttons ---------/
   function onSearch() {
     setIsPutSearh(true);
     setIsPutLoadMore(false);
-
-    console.log(pictures);
   }
 
   function onLoadMore() {
@@ -62,6 +60,7 @@ function App() {
   // --------------------------------------------------/
   //
   //
+  // --------------------------------------------------/
   useEffect(() => {
     if (query === null) return;
 
@@ -73,7 +72,6 @@ function App() {
 
         if (isPutSearh) {
           setPictures(response.data.results);
-          console.log(pictures);
         }
 
         if (isPutLoadMore) {
@@ -88,7 +86,7 @@ function App() {
       } catch (err) {
         setError(err.message);
         setPictures(null);
-        
+
       } finally {
         setLoading(false);
       }
@@ -96,13 +94,16 @@ function App() {
 
     fetchPictures(query);
   }, [query, currentPage]);
-
+  // --------------------------------------------------/
+  //
+  //
+  // --------------------------------------------------/
   useEffect(() => {
     if (pictures === null) return;
 
     if (pictures.length > 0) {
       setIsLoadMoreBtnShown(true);
-   
+
       if (currentPage === totalPages) {
         setIsLoadMoreBtnShown(false);
         sendNotifyEndOfData();
@@ -122,27 +123,17 @@ function App() {
         setCurrentPage={setCurrentPage}
         setQuery={setQuery}
         onSearch={onSearch}
-        pictures={pictures}
       />
 
-      {/* <section className="gallery">
-        {pictures.length !== 0 && (
-          <ImageGallery
-            pictures={pictures}
-            onOpenModal={onOpenModal}
-            setImageProps={setImageProps}
-          />
-        )}
-      </section> */}
-      <section className="gallery">
-        {pictures !== null && (
-          <ImageGallery
-            pictures={pictures}
-            onOpenModal={onOpenModal}
-            setImageProps={setImageProps}
-          />
-        )}
-      </section>
+      {pictures !== null && (
+        <ImageGallery
+          pictures={pictures}
+          onOpenModal={onOpenModal}
+          setImageProps={setImageProps}
+        />
+      )}
+
+      {error !== null && <ErrorMessage error={error} />}
 
       {isLoadMoreBtnShown && (
         <LoadMoreBtn
@@ -154,15 +145,11 @@ function App() {
 
       {loading && <Loader />}
 
-      {error !== null && <ErrorMessage error={error} />}
-
       <Toaster position="top-right" reverseOrder={false} />
 
-      <section className="section-modal">
-        {isModalOpen && (
-          <ImageModal onCloseModal={onCloseModal} imageProps={imageProps} />
-        )}
-      </section>
+      {isModalOpen && (
+        <ImageModal onCloseModal={onCloseModal} imageProps={imageProps} />
+      )}
     </>
   );
 }
