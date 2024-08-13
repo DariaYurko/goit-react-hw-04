@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 //
 // --- Variables
 import { getPictures } from './api';
-import { sendNotifyEndOfData } from './toster';
+import { sendNotifyEndOfData, sendNotifyNotFound } from './toster';
 //
 // --- Components
 import SearchBar from './components/SearchBar/SearchBar';
@@ -26,9 +26,9 @@ function App() {
     alt: '',
   });
   const [loading, setLoading] = useState(false);
-  const [pictures, setPictures] = useState([]);
+  // const [pictures, setPictures] = useState([]);
+  const [pictures, setPictures] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [isMoreData, setIsMoreData] = useState(true);
   const [totalPages, setTotalPages] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPutSearh, setIsPutSearh] = useState(false);
@@ -51,7 +51,10 @@ function App() {
   function onSearch() {
     setIsPutSearh(true);
     setIsPutLoadMore(false);
+
+    console.log(pictures);
   }
+
   function onLoadMore() {
     setIsPutLoadMore(true);
     setIsPutSearh(false);
@@ -70,6 +73,7 @@ function App() {
 
         if (isPutSearh) {
           setPictures(response.data.results);
+          console.log(pictures);
         }
 
         if (isPutLoadMore) {
@@ -78,24 +82,13 @@ function App() {
           });
         }
 
-        if (pictures) {
-          setIsLoadMoreBtnShown(true);
-        }
-
         setTotalPages(response.data.total_pages);
-
-        if (currentPage === totalPages) {
-          setIsLoadMoreBtnShown(false);
-          sendNotifyEndOfData();
-        }
-
-        // console.log(totalPages);
-        // console.log(currentPage);
-
         setError(null);
+
       } catch (err) {
         setError(err.message);
         setPictures(null);
+        
       } finally {
         setLoading(false);
       }
@@ -104,6 +97,21 @@ function App() {
     fetchPictures(query);
   }, [query, currentPage]);
 
+  useEffect(() => {
+    if (pictures === null) return;
+
+    if (pictures.length > 0) {
+      setIsLoadMoreBtnShown(true);
+   
+      if (currentPage === totalPages) {
+        setIsLoadMoreBtnShown(false);
+        sendNotifyEndOfData();
+      }
+    } else {
+      sendNotifyNotFound();
+      setIsLoadMoreBtnShown(false);
+    }
+  }, [pictures]);
   // ----------------------------------------------------/
   //
   //
@@ -114,10 +122,20 @@ function App() {
         setCurrentPage={setCurrentPage}
         setQuery={setQuery}
         onSearch={onSearch}
+        pictures={pictures}
       />
 
-      <section className="gallery">
+      {/* <section className="gallery">
         {pictures.length !== 0 && (
+          <ImageGallery
+            pictures={pictures}
+            onOpenModal={onOpenModal}
+            setImageProps={setImageProps}
+          />
+        )}
+      </section> */}
+      <section className="gallery">
+        {pictures !== null && (
           <ImageGallery
             pictures={pictures}
             onOpenModal={onOpenModal}
