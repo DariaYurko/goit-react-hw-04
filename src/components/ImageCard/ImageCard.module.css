@@ -1,0 +1,9 @@
+.pictureThumb{
+   width: 100%;
+   height: 300px;
+}
+.picture{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}

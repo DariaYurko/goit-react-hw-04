@@ -1,0 +1,38 @@
+.form{
+   background-color: rgba(71, 71, 71, 0.457);
+   padding: 15px ;
+   margin-bottom: 30px;
+   border-radius: 8px;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   column-gap: 5px;
+}
+
+.input{
+   color: #474545;
+   line-height: 1.5;
+   padding: 8px;
+   border-radius: 8px;
+   min-width: 300px;
+}
+
+.button{
+   font-size: 16px;
+   font-weight: 600;
+   border-radius: 8px;
+   align-self: center;
+   color: #f4f0f0;
+   line-height: 1;
+   min-width: 100px;
+   border: 1px solid grey;
+}
+
+.input,
+.button {
+   display: inline-block;
+   height: 40px;
+   transition: all 250ms linear;
+   cursor: pointer;
+}
