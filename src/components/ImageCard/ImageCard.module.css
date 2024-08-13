@@ -1,9 +1,22 @@
-.pictureThumb{
+.pictureThumb {
    width: 100%;
    height: 300px;
 }
-.picture{
+
+.picture {
    width: 100%;
    height: 100%;
    object-fit: cover;
+}
+
+@media only screen and (max-width: 1023px) {
+   .pictureThumb {
+      height: 300px;
+   }
+}
+
+@media only screen and (max-width: 500px) {
+   .pictureThumb {
+      height: 200px;
+   }
 }

@@ -8,7 +8,25 @@
    width: calc((100% - 40px) / 3);
    transition: 250ms ease;
 }
+
 .gallaryItem:hover {
    cursor: pointer;
    box-shadow: 0px 0px 12px 7px rgba(243, 241, 241, 0.402);
+}
+
+
+@media only screen and (max-width: 1023px) {
+   .gallaryItem {
+      width: calc((100% - 20px) / 2);
+   }
+}
+
+@media only screen and (max-width: 767px) {
+   .gallaryList {
+      gap: 10px;
+   }
+
+   .gallaryItem {
+      width: 100%
+   }
 }
