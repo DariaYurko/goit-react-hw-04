@@ -1,13 +1,8 @@
 import css from './LoadMoreBtn.module.css';
 
-function LoadMoreBtn({
-  currentPage,
-  setCurrentPage,
-  onLoadMore
-}) {
+function LoadMoreBtn({ onLoadMore }) {
   
   const handleClick = () => {
-    setCurrentPage(currentPage + 1);
     onLoadMore()
   };
 

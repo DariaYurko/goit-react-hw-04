@@ -1,8 +1,7 @@
 import css from './SearchBar.module.css';
 import { sendNotifyEmptyField } from '../../toster';
-import { useEffect } from 'react';
 
-function SearchBar({ setQuery, setCurrentPage, onSearch }) {
+function SearchBar({ onSearch }) {
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -14,9 +13,7 @@ function SearchBar({ setQuery, setCurrentPage, onSearch }) {
       return;
     }
 
-    setQuery(queryValue);
-    setCurrentPage(1);
-    onSearch();
+    onSearch(queryValue);
 
     form.reset();
   };

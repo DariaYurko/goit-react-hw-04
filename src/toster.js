@@ -11,7 +11,7 @@ export const sendNotifyEmptyField = () => {
 };
 
 export const sendNotifyEndOfData = () => {
-  return toast('We are sorry, there are no more pictures to load.', {
+  return toast("We're sorry, but you've reached the end of search results.", {
     style: {
       borderRadius: '10px',
       background: '#fff',
