@@ -10,9 +10,6 @@ import { sendNotifyEndOfData, sendNotifyNotFound } from './toster';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageModal from './components/ImageModal/ImageModal';
-
-// import ImageModal from './components/ImageModal/ImageModal';
-
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
