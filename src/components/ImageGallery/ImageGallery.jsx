@@ -1,18 +1,15 @@
 import ImageCard from '../ImageCard/ImageCard';
 import css from './ImageGallery.module.css'
 
-function ImageGallery({ pictures, onOpenModal, setImageProps }) {
+function ImageGallery({ pictures, openModal, setImageProps }) {
   return (
     <ul className={css.gallaryList}>
       {pictures.map(picture => {
         return (
-          <li
-            key={picture.id}
-            className={css.gallaryItem}
-          >
+          <li key={picture.id} className={css.gallaryItem}>
             <ImageCard
               picture={picture}
-              onOpenModal={onOpenModal}
+              openModal={openModal}
               setImageProps={setImageProps}
             />
           </li>

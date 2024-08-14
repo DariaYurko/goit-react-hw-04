@@ -1,7 +1,6 @@
 // --- Library
 import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-
 //
 // --- Variables
 import { getPictures } from './api';
@@ -11,14 +10,16 @@ import { sendNotifyEndOfData, sendNotifyNotFound } from './toster';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageModal from './components/ImageModal/ImageModal';
+
+// import ImageModal from './components/ImageModal/ImageModal';
+
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 //
 // --- Style
 import './App.css';
-//
-//
+
 //  --------------------------------------------------------------------
 function App() {
   const [imageProps, setImageProps] = useState({
@@ -31,19 +32,17 @@ function App() {
   const [pictures, setPictures] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // --------------------------------------------------/
-  //
-  //
-  // ----------- functions for work with modal --------/
-  function onOpenModal() {
-    setIsModalOpen(true);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  // --------------------------------------------------------------/
+  function openModal() {
+    setIsOpen(true);
   }
 
-  function onCloseModal() {
-    setIsModalOpen(false);
+  function closeModal() {
+    setIsOpen(false);
   }
-  // -------------------------------------------------/
+  // --------------------------------------------------------------/
   //
   //
   // ------- functions for work with buttons ---------/
@@ -76,7 +75,7 @@ function App() {
             return [...prevPictures, ...response.data.results];
           });
         }
-  
+
         setTotalPages(response.data.total_pages);
         setError(null);
 
@@ -87,11 +86,9 @@ function App() {
         if (currentPage === response.data.total_pages) {
           sendNotifyEndOfData();
         }
-
       } catch (err) {
         setError(err.message);
         setPictures(null);
-
       } finally {
         setLoading(false);
       }
@@ -111,7 +108,7 @@ function App() {
       {pictures !== null && (
         <ImageGallery
           pictures={pictures}
-          onOpenModal={onOpenModal}
+          openModal={openModal}
           setImageProps={setImageProps}
         />
       )}
@@ -122,9 +119,11 @@ function App() {
 
       {error !== null && <ErrorMessage error={error} />}
 
-      {isModalOpen === true && (
-        <ImageModal onCloseModal={onCloseModal} imageProps={imageProps} />
-      )}
+      <ImageModal
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        imageProps={imageProps}
+      />
 
       <Toaster position="top-right" reverseOrder={false} />
     </>

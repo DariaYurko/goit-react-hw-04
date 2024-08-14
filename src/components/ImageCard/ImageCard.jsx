@@ -1,9 +1,8 @@
 import css from './ImageCard.module.css'
 
-function ImageCard({ picture, setImageProps, onOpenModal }) {
-  
+function ImageCard({ picture, setImageProps, openModal }) {
   function handleClick() {
-    onOpenModal();
+    openModal();
 
     setImageProps({
       url: picture.urls.regular,

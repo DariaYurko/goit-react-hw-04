@@ -1,40 +1,36 @@
 import css from './ImageModal.module.css';
-import { useEffect } from 'react';
+import Modal from 'react-modal';
 
-const ImageModal = ({ onCloseModal, imageProps }) => {
-  //
-  // ----------- Actions by key 'Escape'------------------------
-  useEffect(() => {
-    const handleKeyDown = event => {
-      if (event.code === 'Escape') {
-        onCloseModal();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
+Modal.setAppElement('#root');
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onCloseModal]);
-  // ------------------------------------------------------------
-  //
-  //
-  // ----------- Actions by click on backdrop--------------------
-  const handleBackdropClick = event => {
-    if (event.target === event.currentTarget) {
-      onCloseModal();
-    }
-  };
-  // ------------------------------------------------------------
-  //
-  //
-  return (
-    <div onClick={handleBackdropClick} className={css.backdrop}>
-      <div className={css.modal}>
-        <img src={imageProps.url} alt={imageProps.alt} className={css.image} />
-      </div>
-    </div>
-  );
+const customStyles = {
+  content: {
+    width: '70%',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    background: 'rgba(38, 40, 49, 0.968)',
+    border: 'none',
+    boxShadow: '0px 0px 3px 0px rgba(243, 241, 241, 0.402)',
+  },
+  overlay: {
+    background: 'rgba(38, 40, 49, 0.968)',
+  },
 };
+
+function ImageModal({ modalIsOpen, closeModal, imageProps }) {
+  return (
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Example Modal"
+    >
+      <img className={css.picture} src={imageProps.url} alt={imageProps.alt} />
+    </Modal>
+  );
+}
 
 export default ImageModal;
